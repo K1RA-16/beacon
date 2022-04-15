@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyThemes {
-  static bool dark = true;
+  static bool dark = false;
   static ThemeData lightTheme(BuildContext context) => ThemeData(
       primarySwatch: Colors.orange,
       fontFamily: 'FuturaBold',

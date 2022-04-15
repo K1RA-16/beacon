@@ -5,6 +5,7 @@ import 'package:beacon/utilities/themes.dart';
 import 'package:beacon/view_model/base_view_model.dart';
 import 'package:beacon/views/base_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -12,6 +13,9 @@ import 'package:overlay_support/overlay_support.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   EnvironmentConfig.loadEnvVariables();
+  var brightness = SchedulerBinding.instance.window.platformBrightness;
+  bool isDarkMode = brightness == Brightness.dark;
+  isDarkMode ? MyThemes.dark = true : MyThemes.dark = false;
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
