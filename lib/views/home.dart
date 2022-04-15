@@ -5,6 +5,7 @@ import 'package:beacon/components/shape_painter.dart';
 import 'package:beacon/locator.dart';
 import 'package:beacon/models/beacon/beacon.dart';
 import 'package:beacon/utilities/constants.dart';
+import 'package:beacon/utilities/themes.dart';
 import 'package:beacon/view_model/home_view_model.dart';
 import 'package:beacon/views/base_view.dart';
 import 'package:flutter/material.dart';
@@ -39,12 +40,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         ),
         actions: <Widget>[
           HikeButton(
+            borderColor: MyThemes.dark ? Colors.black : Colors.white,
             buttonHeight: 2.5.h,
             buttonWidth: 8.w,
             onTap: () => Navigator.of(context).pop(false),
             text: 'No',
           ),
           HikeButton(
+            borderColor: MyThemes.dark ? Colors.black : Colors.white,
             buttonHeight: 2.5.h,
             buttonWidth: 8.w,
             onTap: () =>
@@ -58,6 +61,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallSized = MediaQuery.of(context).size.height < 900;
     return WillPopScope(
       onWillPop: _onPopHome,
       child: BaseView<HomeViewModel>(builder: (context, model, child) {
@@ -66,6 +70,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             ? Scaffold(body: Center(child: CircularProgressIndicator()))
             : Scaffold(
                 resizeToAvoidBottomInset: false,
+                backgroundColor: MyThemes.dark ? Colors.black87 : Colors.white,
                 body: SafeArea(
                   child: ModalProgressHUD(
                     inAsyncCall: model.isCreatingHike,
@@ -82,6 +87,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                             onPressed: () => showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       actionsAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       title: Text(
@@ -96,10 +104,17 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                             ? 'Would you like to create an account?'
                                             : 'Are you sure you wanna logout?',
                                         style: TextStyle(
-                                            fontSize: 16, color: kBlack),
+                                          fontSize: 16,
+                                          color: MyThemes.dark
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
                                       ),
                                       actions: <Widget>[
                                         HikeButton(
+                                          borderColor: MyThemes.dark
+                                              ? Colors.black
+                                              : Colors.white,
                                           buttonHeight: 2.5.h,
                                           buttonWidth: 8.w,
                                           onTap: () =>
@@ -108,6 +123,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                           textSize: 18.0,
                                         ),
                                         HikeButton(
+                                          borderColor: MyThemes.dark
+                                              ? Colors.black
+                                              : Colors.white,
                                           buttonHeight: 2.5.h,
                                           buttonWidth: 8.w,
                                           onTap: () {
@@ -135,11 +153,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               Container(
                                 width: 45.w,
                                 child: HikeButton(
+                                  borderColor: MyThemes.dark
+                                      ? Colors.black
+                                      : Colors.white,
                                   buttonWidth: homebwidth,
                                   buttonHeight: homebheight - 2,
                                   text: 'Create Hike',
-                                  textColor: Colors.white,
-                                  borderColor: Colors.white,
+                                  textColor: kBlack,
                                   buttonColor: kYellow,
                                   onTap: () {
                                     if (userConfig.currentUser.isGuest) {
@@ -161,7 +181,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                   buttonWidth: homebwidth,
                                   buttonHeight: homebheight - 2,
                                   text: 'Join a Hike',
-                                  textColor: kYellow,
+                                  textColor: kBlack,
                                   borderColor: kYellow,
                                   buttonColor: Colors.white,
                                   onTap: () async {
@@ -178,11 +198,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.565,
+                              height: isSmallSized
+                                  ? MediaQuery.of(context).size.height * 0.500
+                                  : MediaQuery.of(context).size.height * 0.565,
                               margin: EdgeInsets.only(top: 20),
                               decoration: BoxDecoration(
-                                  color: kLightBlue,
+                                  color: MyThemes.dark
+                                      ? Colors.blueGrey
+                                      : kLightBlue,
                                   borderRadius: BorderRadius.only(
                                       topLeft: const Radius.circular(50.0),
                                       topRight: const Radius.circular(50.0))),
@@ -193,8 +216,23 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                     indicatorColor: kBlue,
                                     labelColor: kBlack,
                                     tabs: [
-                                      Tab(text: 'Your Beacons'),
-                                      Tab(text: 'Nearby Beacons'),
+                                      Tab(
+                                        child: Text(
+                                          "Your Beacons",
+                                          style: TextStyle(
+                                              color: MyThemes.dark
+                                                  ? Colors.white
+                                                  : kBlack),
+                                        ),
+                                      ),
+                                      Tab(
+                                          child: Text(
+                                        "Nearby Beacons",
+                                        style: TextStyle(
+                                            color: MyThemes.dark
+                                                ? Colors.white
+                                                : kBlack),
+                                      )),
                                     ],
                                     controller: tabController,
                                   ),
@@ -236,8 +274,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                                                       TextAlign
                                                                           .center,
                                                                   style: TextStyle(
-                                                                      color:
-                                                                          kBlack,
+                                                                      color: MyThemes
+                                                                              .dark
+                                                                          ? Colors
+                                                                              .white
+                                                                          : kBlack,
                                                                       fontSize:
                                                                           20),
                                                                 ),
@@ -251,8 +292,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                                                     //   TextAlign
                                                                     //       .center,
                                                                     style: TextStyle(
-                                                                        color:
-                                                                            kBlack,
+                                                                        color: MyThemes.dark
+                                                                            ? Colors
+                                                                                .white
+                                                                            : kBlack,
                                                                         fontSize:
                                                                             20),
                                                                     children: [
@@ -345,7 +388,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                                         child: Text(
                                                           'No nearby beacons found :(',
                                                           style: TextStyle(
-                                                              color: kBlack,
+                                                              color: MyThemes
+                                                                      .dark
+                                                                  ? Colors.white
+                                                                  : kBlack,
                                                               fontSize: 20),
                                                         ),
                                                       ),
@@ -374,7 +420,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                                         child: Text(
                                                             'No nearby beacons found :(',
                                                             style: TextStyle(
-                                                                color: kBlack,
+                                                                color: MyThemes
+                                                                        .dark
+                                                                    ? Colors
+                                                                        .white
+                                                                    : kBlack,
                                                                 fontSize: 18))),
                                                   );
                                                 }

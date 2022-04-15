@@ -18,6 +18,8 @@ import 'package:share_plus/share_plus.dart';
 
 import 'package:sizer/sizer.dart';
 
+import '../utilities/themes.dart';
+
 class HikeScreenWidget {
   static copyPasskey(String passkey) {
     Clipboard.setData(ClipboardData(text: passkey));
@@ -61,6 +63,8 @@ class HikeScreenWidget {
                       child: HikeButton(
                           buttonHeight: optbheight - 4,
                           textSize: 16,
+                          borderColor:
+                              MyThemes.dark ? Colors.black : Colors.white,
                           text: 'Generate URL',
                           textColor: Colors.white,
                           buttonColor: kYellow,
@@ -74,6 +78,8 @@ class HikeScreenWidget {
                     ),
                     Flexible(
                       child: HikeButton(
+                        borderColor:
+                            MyThemes.dark ? Colors.black : Colors.white,
                         buttonHeight: optbheight - 4,
                         textSize: 16,
                         text: 'Copy Passkey',
@@ -334,6 +340,7 @@ class HikeScreenWidget {
                   ),
                   Flexible(
                     child: HikeButton(
+                      borderColor: MyThemes.dark ? Colors.black : Colors.white,
                       text: 'Create Landmark',
                       textSize: 17.0,
                       textColor: Colors.white,

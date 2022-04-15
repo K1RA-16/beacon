@@ -1,6 +1,7 @@
 import 'package:beacon/config/environment_config.dart';
 import 'package:beacon/locator.dart';
 import 'package:beacon/router.dart' as router;
+import 'package:beacon/utilities/themes.dart';
 import 'package:beacon/view_model/base_view_model.dart';
 import 'package:beacon/views/base_view.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,9 @@ void main() async {
           debugShowCheckedModeBanner: false,
           title: 'Beacon',
           navigatorKey: navigationService.navigatorKey,
-          theme: ThemeData(fontFamily: 'FuturaBold'),
+          theme: MyThemes.dark
+              ? MyThemes.darkTheme(context)
+              : MyThemes.lightTheme(context),
           initialRoute: '/',
           onGenerateRoute: router.generateRoute,
         ),

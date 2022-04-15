@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 
+import '../utilities/themes.dart';
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key key}) : super(key: key);
 
@@ -37,12 +39,14 @@ class _AuthScreenState extends State<AuthScreen>
         ),
         actions: <Widget>[
           HikeButton(
+            borderColor: MyThemes.dark ? Colors.black : Colors.white,
             buttonHeight: 2.5.h,
             buttonWidth: 8.w,
             onTap: () => Navigator.of(context).pop(false),
             text: 'No',
           ),
           HikeButton(
+            borderColor: MyThemes.dark ? Colors.black : Colors.white,
             buttonHeight: 2.5.h,
             buttonWidth: 8.w,
             onTap: () =>
@@ -94,7 +98,7 @@ class _AuthScreenState extends State<AuthScreen>
                                   onPageChanged: (i) {
                                     if (i == 0) {
                                       setState(() {
-                                        model.right = Colors.black;
+                                        model.right = Colors.grey;
                                         model.left = Colors.white;
                                       });
                                       Future.delayed(
@@ -105,7 +109,7 @@ class _AuthScreenState extends State<AuthScreen>
                                     } else if (i == 1) {
                                       setState(() {
                                         model.right = Colors.white;
-                                        model.left = Colors.black;
+                                        model.left = Colors.grey;
                                       });
                                       Future.delayed(
                                           Duration(milliseconds: 500), () {
@@ -282,7 +286,9 @@ class _AuthScreenState extends State<AuthScreen>
               height: 3.5.h,
             ),
             HikeButton(
+              borderColor: MyThemes.dark ? Colors.black : Colors.white,
               onTap: model.nextLogin,
+              textColor: MyThemes.dark ? Colors.black : Colors.white,
               text: 'LOGIN',
             ),
             Padding(
@@ -291,13 +297,15 @@ class _AuthScreenState extends State<AuthScreen>
               child: Text(
                 "Or",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: MyThemes.dark ? Colors.white : Colors.black,
                   fontSize: 16.0,
                 ),
               ),
             ),
             HikeButton(
+              borderColor: MyThemes.dark ? Colors.black : Colors.white,
               onTap: () => model.loginAsGuest(),
+              textColor: MyThemes.dark ? Colors.black : Colors.white,
               text: 'LOGIN AS GUEST',
             ),
           ],
@@ -427,6 +435,7 @@ class _AuthScreenState extends State<AuthScreen>
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
               ),
               child: HikeButton(
+                borderColor: MyThemes.dark ? Colors.black : Colors.white,
                 onTap: () => model.nextSignup(),
                 text: 'SIGN UP',
               ),

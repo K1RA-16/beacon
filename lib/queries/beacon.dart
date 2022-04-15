@@ -43,6 +43,23 @@ class BeaconQueries {
     ''';
   }
 
+  // String updateLeader(
+  //     String id, String lat, String lon, String leaderId, String name) {
+  //   return '''
+  //       mutation {
+  //           updateBeaconLeader(id: "$id", location: {lat: "$lat", lon:"$lon"}, leader {
+  //             id:"$leaderId"
+  //             name:"$name"
+  //           }){
+  //             location{
+  //               lat
+  //               lon
+  //             }
+  //           }
+  //       }
+  //   ''';
+  // }
+
   String updateLeaderLoc(String id, String lat, String lon) {
     return '''
         mutation {

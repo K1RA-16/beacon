@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:beacon/utilities/themes.dart';
 import 'package:beacon/views/hike_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -95,6 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyThemes.dark ? Colors.black : Colors.white,
       key: const Key('SplashScreenScaffold'),
       body: Center(
         child: new Image(image: new AssetImage('images/hikers_group.png')),

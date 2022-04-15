@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../utilities/constants.dart';
+import '../utilities/themes.dart';
 
 class ShapePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
 
-    paint.color = kBlue;
+    paint.color = MyThemes.dark ? Colors.blueAccent : kBlue;
     paint.style = PaintingStyle.fill;
     var path = Path();
 

@@ -91,11 +91,13 @@ class DataBaseMutationFunctions {
   }
 
   Future<String> signup({String name, String email, String password}) async {
+    print("$email $password $name");
     final QueryResult result = email != null
         ? await clientNonAuth.mutate(MutationOptions(
             document: gql(_authQuery.registerUser(name, email, password))))
         : await clientNonAuth.mutate(
             MutationOptions(document: gql(_authQuery.loginAsGuest(name))));
+    print(result);
     if (result.hasException) {
       navigationService
           .showSnackBar("${result.exception.graphqlErrors.first.message}");
@@ -116,6 +118,7 @@ class DataBaseMutationFunctions {
   }
 
   Future<String> login({String email, String password, User user}) async {
+    print("$email $password $user");
     final QueryResult result = (email == null)
         ? await clientNonAuth.mutate(
             MutationOptions(document: gql(_authQuery.loginUsingID(user.id))))

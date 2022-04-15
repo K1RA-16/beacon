@@ -1,4 +1,5 @@
 import 'package:beacon/utilities/constants.dart';
+import 'package:beacon/utilities/themes.dart';
 import 'package:flutter/material.dart';
 
 class HikeButton extends StatelessWidget {

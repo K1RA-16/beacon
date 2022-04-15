@@ -4,6 +4,8 @@ import 'package:beacon/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../utilities/themes.dart';
+
 class DialogBoxes {
   static AlertDialog showExitDialog(
       BuildContext context, bool isLeader, int X, bool isBeaconExpired) {
@@ -26,6 +28,7 @@ class DialogBoxes {
       actionsAlignment: MainAxisAlignment.spaceEvenly,
       actions: <Widget>[
         HikeButton(
+          borderColor: MyThemes.dark ? Colors.black : Colors.white,
           buttonHeight: 2.5.h,
           buttonWidth: 8.w,
           onTap: () => Navigator.of(context).pop(false),
@@ -33,6 +36,7 @@ class DialogBoxes {
           textSize: 18.0,
         ),
         HikeButton(
+          borderColor: MyThemes.dark ? Colors.black : Colors.white,
           buttonHeight: 2.5.h,
           buttonWidth: 8.w,
           onTap: () {
@@ -76,6 +80,7 @@ class DialogBoxes {
                 ),
                 Flexible(
                   child: HikeButton(
+                      borderColor: MyThemes.dark ? Colors.black : Colors.white,
                       buttonWidth: optbwidth,
                       text: 'Done',
                       textSize: 18.0,

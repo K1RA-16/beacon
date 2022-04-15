@@ -7,6 +7,8 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../utilities/themes.dart';
+
 class CreateJoinBeaconDialog {
   static Future createHikeDialog(BuildContext context, HomeViewModel model) {
     bool isSmallSized = MediaQuery.of(context).size.height < 800;
@@ -32,220 +34,248 @@ class CreateJoinBeaconDialog {
                       const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        height: isSmallSized ? 14.h : 12.h,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: TextFormField(
-                            style: TextStyle(fontSize: 22.0),
-                            validator: (value) =>
-                                Validator.validateBeaconTitle(value),
-                            onChanged: (name) {
-                              model.title = name;
-                            },
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Enter Title Here',
-                                labelStyle: TextStyle(
-                                    fontSize: labelsize, color: kYellow),
-                                hintStyle: TextStyle(
-                                    fontSize: hintsize, color: hintColor),
-                                labelText: 'Title',
-                                alignLabelWithHint: true,
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: TextFormField(
+                          style: TextStyle(fontSize: 22.0),
+                          validator: (value) =>
+                              Validator.validateBeaconTitle(value),
+                          onChanged: (name) {
+                            model.title = name;
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Enter Title Here',
+                            labelStyle:
+                                TextStyle(fontSize: labelsize, color: kYellow),
+                            hintStyle: TextStyle(
+                                fontSize: hintsize,
+                                color:
+                                    MyThemes.dark ? Colors.white60 : hintColor),
+                            labelText: 'Title',
+                            alignLabelWithHint: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueGrey, width: 1.0),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueGrey, width: 1.0),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
                           ),
                         ),
-                        color: kLightBlue,
                       ),
                       SizedBox(
                         height: 2.h,
                       ),
-                      Container(
-                        height: isSmallSized ? 12.h : 10.h,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: InkWell(
-                            onTap: () async {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              model.startingdate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime(2100),
-                                builder: (context, child) => Theme(
-                                    data: ThemeData().copyWith(
-                                      textTheme: Theme.of(context).textTheme,
-                                      colorScheme: ColorScheme.light(
-                                        primary: kBlue,
-                                        onPrimary: Colors.white,
-                                        surface: kBlue,
-                                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: InkWell(
+                          onTap: () async {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            model.startingdate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100),
+                              builder: (context, child) => Theme(
+                                  data: ThemeData().copyWith(
+                                    textTheme: Theme.of(context).textTheme,
+                                    colorScheme: ColorScheme.light(
+                                      primary: kBlue,
+                                      onPrimary: Colors.white,
+                                      surface: kBlue,
                                     ),
-                                    child: child),
-                              );
+                                  ),
+                                  child: child),
+                            );
+                            model.startsAtDate.text =
+                                model.startingdate.toString().substring(0, 10);
+                          },
+                          child: TextFormField(
+                            enabled: false,
+                            style: TextStyle(fontSize: 22.0),
+                            controller: model.startsAtDate,
+                            onChanged: (value) {
                               model.startsAtDate.text = model.startingdate
                                   .toString()
                                   .substring(0, 10);
                             },
-                            child: TextFormField(
-                              enabled: false,
-                              controller: model.startsAtDate,
-                              onChanged: (value) {
-                                model.startsAtDate.text = model.startingdate
-                                    .toString()
-                                    .substring(0, 10);
-                              },
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Choose Start Date',
-                                  labelStyle: TextStyle(
-                                      fontSize: labelsize, color: kYellow),
-                                  hintStyle: TextStyle(
-                                      fontSize: hintsize, color: hintColor),
-                                  labelText: 'Start Date',
-                                  alignLabelWithHint: true,
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none),
-                            ),
-                          ),
-                        ),
-                        color: kLightBlue,
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Container(
-                        height: isSmallSized ? 12.h : 10.h,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: InkWell(
-                            onTap: () async {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              model.startingTime = await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now(),
-                                builder: (context, child) {
-                                  return Theme(
-                                    data: ThemeData(
-                                      textTheme: Theme.of(context).textTheme,
-                                      timePickerTheme: TimePickerThemeData(
-                                        dialHandColor: kBlue,
-                                        dayPeriodTextColor: kBlue,
-                                        hourMinuteTextColor: kBlue,
-                                        helpTextStyle: TextStyle(
-                                          fontFamily: 'FuturaBold',
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        hourMinuteTextStyle: TextStyle(
-                                          fontFamily: 'FuturaBold',
-                                          fontSize: 40.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        dayPeriodTextStyle: TextStyle(
-                                          fontFamily: 'FuturaBold',
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                    // This will change to light theme.
-                                    child: child,
-                                  );
-                                },
-                              );
-                              model.startsAtTime.text = model.startingTime
-                                  .toString()
-                                  .substring(10, 15);
-                            },
-                            child: TextFormField(
-                              enabled: false,
-                              controller: model.startsAtTime,
-                              onChanged: (value) {
-                                model.startsAtTime.text = model.startingTime
-                                    .toString()
-                                    .substring(10, 15);
-                              },
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                alignLabelWithHint: true,
-                                errorStyle: TextStyle(color: Colors.red[800]),
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
-                                labelText: 'Start Time',
-                                labelStyle: TextStyle(
-                                    fontSize: labelsize, color: kYellow),
-                                hintStyle: TextStyle(
-                                    fontSize: hintsize, color: hintColor),
-                                hintText: 'Choose start time',
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
+                            decoration: InputDecoration(
+                              hintText: 'Choose Start Date',
+                              labelStyle: TextStyle(
+                                  fontSize: labelsize, color: kYellow),
+                              hintStyle: TextStyle(
+                                  fontSize: hintsize,
+                                  color: MyThemes.dark
+                                      ? Colors.white60
+                                      : hintColor),
+                              labelText: 'Start Date',
+                              alignLabelWithHint: true,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueGrey, width: 1.0),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueGrey, width: 1.0),
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
                             ),
                           ),
                         ),
-                        color: kLightBlue,
                       ),
                       SizedBox(
                         height: 2.h,
                       ),
-                      Container(
-                        height: isSmallSized ? 14.h : 12.h,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: InkWell(
-                            onTap: () async {
-                              FocusManager.instance.primaryFocus?.unfocus();
-                              model.resultingDuration =
-                                  await showDurationPicker(
-                                context: context,
-                                initialTime: model.resultingDuration != null
-                                    ? model.resultingDuration
-                                    : Duration(minutes: 30),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              );
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: InkWell(
+                          onTap: () async {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            model.startingTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                              builder: (context, child) {
+                                return Theme(
+                                  data: ThemeData(
+                                    textTheme: Theme.of(context).textTheme,
+                                    timePickerTheme: TimePickerThemeData(
+                                      dialHandColor: kBlue,
+                                      dayPeriodTextColor: kBlue,
+                                      hourMinuteTextColor: kBlue,
+                                      helpTextStyle: TextStyle(
+                                        fontFamily: 'FuturaBold',
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      hourMinuteTextStyle: TextStyle(
+                                        fontFamily: 'FuturaBold',
+                                        fontSize: 40.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      dayPeriodTextStyle: TextStyle(
+                                        fontFamily: 'FuturaBold',
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  // This will change to light theme.
+                                  child: child,
+                                );
+                              },
+                            );
+                            model.startsAtTime.text =
+                                model.startingTime.toString().substring(10, 15);
+                          },
+                          child: TextFormField(
+                            enabled: false,
+                            controller: model.startsAtTime,
+                            onChanged: (value) {
+                              model.startsAtTime.text = model.startingTime
+                                  .toString()
+                                  .substring(10, 15);
+                            },
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              alignLabelWithHint: true,
+                              errorStyle: TextStyle(color: Colors.red[800]),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              labelText: 'Start Time',
+                              labelStyle: TextStyle(
+                                  fontSize: labelsize, color: kYellow),
+                              hintStyle: TextStyle(
+                                  fontSize: hintsize,
+                                  color: MyThemes.dark
+                                      ? Colors.white60
+                                      : hintColor),
+                              hintText: 'Choose start time',
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueGrey, width: 1.0),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueGrey, width: 1.0),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: InkWell(
+                          onTap: () async {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            model.resultingDuration = await showDurationPicker(
+                              context: context,
+                              initialTime: model.resultingDuration != null
+                                  ? model.resultingDuration
+                                  : Duration(minutes: 30),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            );
+                            model.durationController.text = model
+                                .resultingDuration
+                                .toString()
+                                .substring(0, 8);
+                          },
+                          child: TextFormField(
+                            enabled: false,
+                            controller: model.durationController,
+                            onChanged: (value) {
                               model.durationController.text = model
                                   .resultingDuration
                                   .toString()
                                   .substring(0, 8);
                             },
-                            child: TextFormField(
-                              enabled: false,
-                              controller: model.durationController,
-                              onChanged: (value) {
-                                model.durationController.text = model
-                                    .resultingDuration
-                                    .toString()
-                                    .substring(0, 8);
-                              },
-                              validator: (value) =>
-                                  Validator.validateDuration(value.toString()),
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  alignLabelWithHint: true,
-                                  errorStyle: TextStyle(color: Colors.red[800]),
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  labelText: 'Duration',
-                                  labelStyle: TextStyle(
-                                      fontSize: labelsize, color: kYellow),
-                                  hintStyle: TextStyle(
-                                      fontSize: hintsize, color: hintColor),
-                                  hintText: 'Enter duration of hike',
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none),
+                            validator: (value) =>
+                                Validator.validateDuration(value.toString()),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              alignLabelWithHint: true,
+                              errorStyle: TextStyle(color: Colors.red[800]),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              labelText: 'Duration',
+                              labelStyle: TextStyle(
+                                  fontSize: labelsize, color: kYellow),
+                              hintStyle: TextStyle(
+                                  fontSize: hintsize,
+                                  color: MyThemes.dark
+                                      ? Colors.white60
+                                      : hintColor),
+                              hintText: 'Enter duration of hike',
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueGrey, width: 1.0),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blueGrey, width: 1.0),
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                             ),
                           ),
                         ),
-                        color: kLightBlue,
                       ),
                       SizedBox(
                         height: 2.h,
@@ -253,9 +283,11 @@ class CreateJoinBeaconDialog {
                       Flexible(
                         flex: 2,
                         child: HikeButton(
+                            borderColor:
+                                MyThemes.dark ? Colors.black : Colors.white,
                             text: 'Create',
                             textSize: 18.0,
-                            textColor: Colors.white,
+                            textColor: MyThemes.dark ? kBlack : Colors.white,
                             buttonColor: kYellow,
                             onTap: () {
                               FocusManager.instance.primaryFocus?.unfocus();
@@ -309,41 +341,48 @@ class CreateJoinBeaconDialog {
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    height: isSmallSized ? 14.h : 12.h,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: TextFormField(
-                        keyboardType: TextInputType.text,
-                        textCapitalization: TextCapitalization.characters,
-                        style: TextStyle(fontSize: 22.0),
-                        validator: (value) => Validator.validatePasskey(value),
-                        onChanged: (key) {
-                          model.enteredPasskey = key.toUpperCase();
-                        },
-                        decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: 'Enter Passkey Here',
-                          hintStyle:
-                              TextStyle(fontSize: hintsize, color: hintColor),
-                          labelText: 'Passkey',
-                          labelStyle:
-                              TextStyle(fontSize: labelsize, color: kYellow),
-                          border: InputBorder.none,
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.characters,
+                      style: TextStyle(fontSize: 22.0),
+                      validator: (value) => Validator.validatePasskey(value),
+                      onChanged: (key) {
+                        model.enteredPasskey = key.toUpperCase();
+                      },
+                      decoration: InputDecoration(
+                        alignLabelWithHint: true,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        hintText: 'Enter Passkey Here',
+                        hintStyle: TextStyle(
+                            fontSize: hintsize,
+                            color: MyThemes.dark ? Colors.white60 : hintColor),
+                        labelText: 'Passkey',
+                        labelStyle:
+                            TextStyle(fontSize: labelsize, color: kYellow),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Colors.blueGrey, width: 1.0),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Colors.blueGrey, width: 1.0),
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
                     ),
-                    color: kLightBlue,
                   ),
                   SizedBox(
                     height: 2.h,
                   ),
                   Flexible(
                     child: HikeButton(
+                      borderColor: MyThemes.dark ? Colors.black : Colors.white,
                       text: 'Validate',
                       textSize: 18.0,
-                      textColor: Colors.white,
+                      textColor: MyThemes.dark ? kBlack : Colors.white,
                       buttonColor: kYellow,
                       onTap: () {
                         // navigationService.pop();
