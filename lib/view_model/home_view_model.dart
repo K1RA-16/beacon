@@ -96,6 +96,44 @@ class HomeViewModel extends BaseModel {
     }
   }
 
+  String beaconID;
+  String leaderId;
+  transferBeacon() async {
+    FocusScope.of(navigationService.navigatorKey.currentContext).unfocus();
+    validate = AutovalidateMode.always;
+    if (formKeyCreate.currentState.validate()) {
+      navigationService.pop();
+      setState(ViewState.busy);
+      validate = AutovalidateMode.disabled;
+      databaseFunctions.init();
+      //todo: to check wether the given account exists
+      final Beacon beacon =
+          await databaseFunctions.changeLeader(beaconID, leaderId);
+      // setState(ViewState.idle);
+      if (beacon != null) {
+        hasStarted = DateTime.now()
+            .isAfter(DateTime.fromMillisecondsSinceEpoch(beacon.startsAt));
+        if (hasStarted) {
+          navigationService.pushScreen('/hikeScreen',
+              arguments: HikeScreen(
+                beacon,
+                isLeader: true,
+              ));
+        } else {
+          localNotif.scheduleNotification(beacon);
+          setState(ViewState.idle);
+          navigationService.showSnackBar(
+            'Beacon has not yet started! \nPlease come back at ${DateFormat("hh:mm a, d/M/y").format(DateTime.fromMillisecondsSinceEpoch(beacon.startsAt)).toString()}',
+          );
+          return;
+        }
+      } else {
+        // navigationService.showSnackBar('Something went wrong');
+        setState(ViewState.idle);
+      }
+    }
+  }
+
   logout() async {
     setState(ViewState.busy);
     await userConfig.currentUser.delete();

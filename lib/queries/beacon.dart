@@ -104,6 +104,34 @@ class BeaconQueries {
     ''';
   }
 
+  String changeLeader(String beaconId, String leaderId) {
+    return '''
+        mutation {
+            changeLeader(beaconID:"$beaconId",newLeaderID:"$leaderId"
+              ){
+              _id
+              title
+              shortcode
+              leader {
+                _id
+                name
+              }
+              location {
+                lat
+                lon
+              }
+              followers {
+                _id
+                name
+              }
+              
+              startsAt
+              expiresAt
+            }
+        }
+    ''';
+  }
+
   String fetchBeaconDetail(String id) {
     return '''
         query{
